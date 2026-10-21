@@ -1,0 +1,43 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start User Service",
+      "type": "shell",
+      "command": "cd user-service; npm run dev",
+      "problemMatcher": []
+    },
+    {
+      "label": "Start Gateway",
+      "type": "shell",
+      "command": "cd gateway; npm run dev",
+      "problemMatcher": []
+    },
+    {
+      "label": "Start Admin Service",
+      "type": "shell",
+      "command": "cd admin-service; npm run dev",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run All Services",
+      "dependsOn": [
+        "Start User Service",
+        "Start Gateway",
+        "Start Admin Service"
+      ],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    },
+    {
+      "label": "Stop All Services",
+      "type": "shell",
+      "command": "echo Stopping all services...",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "never"
+      },
+      "group": "none"
+    }
+  ]
+}

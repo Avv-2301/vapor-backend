@@ -1,0 +1,13 @@
+const router = require("express").Router();
+const { userAuth } = require("../middleware/userAuth");
+router.use("/auth", require("./app/auth"));
+router.use("/users", userAuth, require("./app/user"));
+router.use("/products", require("./app/product"));
+router.use("/reviews", require("./app/review"));
+router.use("/profiles", userAuth, require("./app/profile"));
+router.use("/library", userAuth, require("./app/library"));
+router.use("/wallet", userAuth, require("./app/wallet"));
+router.use("/cart", userAuth, require("./app/cart"));
+router.use("/wishlist", userAuth, require("./app/wishlist"));
+router.get("/banners", require("../controllers/app/banner").getHomepageBanners);
+module.exports = router;

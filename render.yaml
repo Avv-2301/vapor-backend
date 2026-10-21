@@ -1,0 +1,70 @@
+services:
+  - type: web
+    name: gamers-vault-user-service
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./user-service/Dockerfile
+    dockerContext: .
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "10000"
+      - key: MONGO_URL
+        sync: false
+      - fromGroup: gamers-vault-auth
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+
+  - type: web
+    name: gamers-vault-admin-service
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./admin-service/Dockerfile
+    dockerContext: .
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "10000"
+      - key: MONGO_URL
+        sync: false
+      - fromGroup: gamers-vault-auth
+
+  - type: web
+    name: gamers-vault-gateway
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./gateway/Dockerfile
+    dockerContext: .
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "10000"
+      - key: USER_SERVICE_URL
+        fromService:
+          type: web
+          name: gamers-vault-user-service
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: ADMIN_SERVICE_URL
+        fromService:
+          type: web
+          name: gamers-vault-admin-service
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: FRONTEND_ORIGINS
+        sync: false
+
+envVarGroups:
+  - name: gamers-vault-auth
+    envVars:
+      - key: JWT_USER_SECRETKEY
+        generateValue: true

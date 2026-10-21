@@ -1,0 +1,36 @@
+services:
+  gateway:
+    build:
+      context: .
+      args:
+        SERVICE: gateway
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      USER_SERVICE_URL: http://user-service:4001
+      ADMIN_SERVICE_URL: http://admin-service:4005
+      FRONTEND_ORIGINS: http://localhost:5173,http://localhost:5174
+    depends_on:
+      - user-service
+      - admin-service
+  user-service:
+    build:
+      context: .
+      args:
+        SERVICE: user-service
+    env_file: ./user-service/.env
+    environment:
+      PORT: 4001
+    expose:
+      - "4001"
+  admin-service:
+    build:
+      context: .
+      args:
+        SERVICE: admin-service
+    env_file: ./admin-service/.env
+    environment:
+      PORT: 4005
+    expose:
+      - "4005"

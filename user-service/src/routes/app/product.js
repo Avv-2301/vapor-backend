@@ -1,0 +1,11 @@
+const router = require("express").Router();
+const c = require("../../controllers/app/product");
+router.get("/", c.getAllProducts);
+router.get("/featured", c.getFeaturedProducts);
+router.get("/on-sale", c.getProductsOnSale);
+router.get("/recently-created", c.getRecentlyCreatedProducts);
+router.get("/new-releases", c.getNewReleases);
+router.get("/genres", c.getAllGenres);
+router.get("/slug/:slug", c.getProductBySlug);
+router.get("/:id", c.getProductById);
+module.exports = router;
