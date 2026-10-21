@@ -1,0 +1,34 @@
+{
+  "name": "@avv-2301/gamers-vault-common",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "version": "1.0.14",
+  "description": "Shared constants and response helpers for Gamer's Vault",
+  "keywords": [
+    "common",
+    "gamer-vault"
+  ],
+  "author": "Your Name",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Avv-2301/gamers-vault-common.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "npx rimraf dist",
+    "prepublishOnly": "npm run clean && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2",
+    "rimraf": "^6.0.0"
+  }
+}
